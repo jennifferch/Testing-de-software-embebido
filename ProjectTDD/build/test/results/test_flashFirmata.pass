@@ -1,0 +1,20 @@
+---
+:source:
+  :path: test
+  :file: test_flashFirmata.c
+:successes:
+- :test: test_WhenInitSystem_ThenMemoryOK
+  :line: 23
+  :message: ''
+- :test: test_WhenInitSystem_ThenMemoryFail
+  :line: 36
+  :message: ''
+:failures: []
+:ignores: []
+:counts:
+  :total: 2
+  :passed: 2
+  :failed: 0
+  :ignored: 0
+:stdout: []
+:time: 0.0031907669981592335
