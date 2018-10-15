@@ -35,7 +35,7 @@
 #include "mock_printf-stdarg.h"
 #include "mock_at45dbx.h"
 #include "mock_gpio.h"
-#include "mock_spi.h"
+#include "mock_nvram.h"
 
 int GlobalExpectCount;
 int GlobalVerifyOrder;
@@ -48,6 +48,7 @@ extern void test_WhenInitSystem_ThenMemoryOK(void);
 extern void test_WhenInitSystem_ThenMemoryFail(void);
 extern void test_WhenRunDebug_ThenflashInitOK(void);
 extern void test_WhenRunDebug_ThenflashInitFail(void);
+extern void test_WhenFirmataIsNotDownload_ThenInit(void);
 
 
 /*=======Mock Management=====*/
@@ -59,21 +60,21 @@ static void CMock_Init(void)
   mock_printf_stdarg_Init();
   mock_at45dbx_Init();
   mock_gpio_Init();
-  mock_spi_Init();
+  mock_nvram_Init();
 }
 static void CMock_Verify(void)
 {
   mock_printf_stdarg_Verify();
   mock_at45dbx_Verify();
   mock_gpio_Verify();
-  mock_spi_Verify();
+  mock_nvram_Verify();
 }
 static void CMock_Destroy(void)
 {
   mock_printf_stdarg_Destroy();
   mock_at45dbx_Destroy();
   mock_gpio_Destroy();
-  mock_spi_Destroy();
+  mock_nvram_Destroy();
 }
 
 /*=======Suite Setup=====*/
@@ -115,6 +116,7 @@ int main(void)
   RUN_TEST(test_WhenInitSystem_ThenMemoryFail, 37);
   RUN_TEST(test_WhenRunDebug_ThenflashInitOK, 50);
   RUN_TEST(test_WhenRunDebug_ThenflashInitFail, 57);
+  RUN_TEST(test_WhenFirmataIsNotDownload_ThenInit, 64);
 
   CMock_Guts_MemFreeFinal();
   return suite_teardown(UnityEnd());

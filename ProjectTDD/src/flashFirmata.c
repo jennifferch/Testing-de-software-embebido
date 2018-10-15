@@ -5,6 +5,7 @@
 #include "at45dbx.h"
 #include "gpio.h"
 #include "spi.h"
+#include "nvram.h"
 
 #define GREEN_OFF() 		gpio_set_gpio_pin(LEDG)
 #define GREEN_ON() 			gpio_clr_gpio_pin(LEDG)
@@ -64,6 +65,12 @@ int flash_init(int spiOptions)
 	}
         
    return 0;
+}
+
+int fw_download_init(void)
+{
+        nvram_init();
+        return 0;
 }
 
 

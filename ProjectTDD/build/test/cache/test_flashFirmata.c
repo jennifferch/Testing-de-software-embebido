@@ -1,5 +1,5 @@
 #include "build/temp/_test_flashFirmata.c"
-#include "mock_spi.h"
+#include "mock_nvram.h"
 #include "mock_gpio.h"
 #include "mock_at45dbx.h"
 #include "mock_printf-stdarg.h"
@@ -146,5 +146,21 @@ void test_WhenRunDebug_ThenflashInitFail(void)
   ((void *)0)
 
   ), (UNITY_UINT)(61), UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+void test_WhenFirmataIsNotDownload_ThenInit(void)
+
+{
+
+   nvram_init_CMockIgnoreAndReturn(66, 0);
+
+   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((fw_download_init())), (
+
+  ((void *)0)
+
+  ), (UNITY_UINT)(67), UNITY_DISPLAY_STYLE_INT);
 
 }
