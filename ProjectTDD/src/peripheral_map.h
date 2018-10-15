@@ -20,6 +20,8 @@ typedef enum {
    SPI_MOSI,
    ENET_RXD0,
 
+   AT45DBX_CHIP_RESET,
+
    // Switches
    // 36   37     38     39
    TEC1,  TEC2,  TEC3,  TEC4,

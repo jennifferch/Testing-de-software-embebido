@@ -4,6 +4,7 @@
 #include "printf-stdarg.h"
 #include "at45dbx.h"
 #include "gpio.h"
+#include "spi.h"
 
 #define GREEN_OFF() 		gpio_set_gpio_pin(LEDG)
 #define GREEN_ON() 			gpio_clr_gpio_pin(LEDG)
@@ -46,6 +47,25 @@ int mem_check(void)
         }
         return 0;
 }
+
+int flash_init(int spiOptions)
+{
+        /* put up flash reset pin */
+        gpio_set_gpio_pin(AT45DBX_CHIP_RESET);
+      
+	if(spiOptions == 0)
+	{
+        
+	   at45dbx_init(spiOptions, 0);
+	}
+        else
+	{
+	   return 1;
+	}
+        
+   return 0;
+}
+
 
 
 

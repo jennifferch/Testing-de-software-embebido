@@ -5,6 +5,6 @@
 
 int mem_check(void);
 void led_init(void);
-void flash_init(void);
+int flash_init(int spiOptions);
 
 #endif // _FLASHFIRMATA_H

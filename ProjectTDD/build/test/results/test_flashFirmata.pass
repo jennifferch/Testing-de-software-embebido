@@ -4,17 +4,23 @@
   :file: test_flashFirmata.c
 :successes:
 - :test: test_WhenInitSystem_ThenMemoryOK
-  :line: 23
+  :line: 24
   :message: ''
 - :test: test_WhenInitSystem_ThenMemoryFail
-  :line: 36
+  :line: 37
+  :message: ''
+- :test: test_WhenRunDebug_ThenflashInitOK
+  :line: 50
+  :message: ''
+- :test: test_WhenRunDebug_ThenflashInitFail
+  :line: 57
   :message: ''
 :failures: []
 :ignores: []
 :counts:
-  :total: 2
-  :passed: 2
+  :total: 4
+  :passed: 4
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.0031907669981592335
+:time: 0.0026878709977609105

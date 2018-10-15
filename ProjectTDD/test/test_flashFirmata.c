@@ -4,6 +4,7 @@
 #include "mock_printf-stdarg.h"
 #include "mock_at45dbx.h"
 #include "mock_gpio.h"
+#include "mock_spi.h"
 
 void setUp(void)
 {
@@ -44,4 +45,18 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
     TEST_ASSERT_EQUAL(1, mem_check());
 
+}
+
+void test_WhenRunDebug_ThenflashInitOK(void)
+{
+   gpio_set_gpio_pin_Expect(AT45DBX_CHIP_RESET);
+   at45dbx_init_IgnoreAndReturn(true);
+   TEST_ASSERT_EQUAL(0, flash_init(0));
+}
+
+void test_WhenRunDebug_ThenflashInitFail(void)
+{
+   gpio_set_gpio_pin_Expect(AT45DBX_CHIP_RESET);
+   at45dbx_init_IgnoreAndReturn(true);
+   TEST_ASSERT_EQUAL(1, flash_init(1));
 }

@@ -1,4 +1,5 @@
 #include "build/temp/_test_flashFirmata.c"
+#include "mock_spi.h"
 #include "mock_gpio.h"
 #include "mock_at45dbx.h"
 #include "mock_printf-stdarg.h"
@@ -12,17 +13,17 @@ void setUp(void)
 
 {
 
-   gpio_enable_gpio_pin_CMockExpect(10, LEDG);
+   gpio_enable_gpio_pin_CMockExpect(11, LEDG);
 
-   gpio_enable_gpio_pin_CMockExpect(11, LEDR);
+   gpio_enable_gpio_pin_CMockExpect(12, LEDR);
 
-   gpio_enable_gpio_pin_CMockExpect(12, LEDB);
+   gpio_enable_gpio_pin_CMockExpect(13, LEDB);
 
-   gpio_set_gpio_pin_CMockExpect(13, LEDG);
+   gpio_set_gpio_pin_CMockExpect(14, LEDG);
 
-   gpio_set_gpio_pin_CMockExpect(14, LEDR);
+   gpio_set_gpio_pin_CMockExpect(15, LEDR);
 
-   gpio_set_gpio_pin_CMockExpect(15, LEDB);
+   gpio_set_gpio_pin_CMockExpect(16, LEDB);
 
    led_init();
 
@@ -42,9 +43,9 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
 {
 
-    gpio_clr_gpio_pin_CMockExpect(25, LEDG);
+    gpio_clr_gpio_pin_CMockExpect(26, LEDG);
 
-    at45dbx_mem_check_CMockIgnoreAndReturn(26, 
+    at45dbx_mem_check_CMockIgnoreAndReturn(27, 
 
    1
 
@@ -52,11 +53,11 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
 
 
-    printk_CMockIgnoreAndReturn(28, 0);
+    printk_CMockIgnoreAndReturn(29, 0);
 
-    gpio_set_gpio_pin_CMockExpect(29, LEDG);
+    gpio_set_gpio_pin_CMockExpect(30, LEDG);
 
-    gpio_clr_gpio_pin_CMockExpect(30, LEDB);
+    gpio_clr_gpio_pin_CMockExpect(31, LEDB);
 
 
 
@@ -64,7 +65,7 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
    ((void *)0)
 
-   ), (UNITY_UINT)(32), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(33), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -76,9 +77,9 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
 {
 
-    gpio_clr_gpio_pin_CMockExpect(38, LEDG);
+    gpio_clr_gpio_pin_CMockExpect(39, LEDG);
 
-    at45dbx_mem_check_CMockIgnoreAndReturn(39, 
+    at45dbx_mem_check_CMockIgnoreAndReturn(40, 
 
    0
 
@@ -86,11 +87,11 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
 
 
-    printk_CMockIgnoreAndReturn(41, 0);
+    printk_CMockIgnoreAndReturn(42, 0);
 
-    gpio_clr_gpio_pin_CMockExpect(42, LEDR);
+    gpio_clr_gpio_pin_CMockExpect(43, LEDR);
 
-    gpio_set_gpio_pin_CMockExpect(43, LEDG);
+    gpio_set_gpio_pin_CMockExpect(44, LEDG);
 
 
 
@@ -98,8 +99,52 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
    ((void *)0)
 
-   ), (UNITY_UINT)(45), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(46), UNITY_DISPLAY_STYLE_INT);
 
 
+
+}
+
+
+
+void test_WhenRunDebug_ThenflashInitOK(void)
+
+{
+
+   gpio_set_gpio_pin_CMockExpect(52, AT45DBX_CHIP_RESET);
+
+   at45dbx_init_CMockIgnoreAndReturn(53, 
+
+  1
+
+  );
+
+   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_init(0))), (
+
+  ((void *)0)
+
+  ), (UNITY_UINT)(54), UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+void test_WhenRunDebug_ThenflashInitFail(void)
+
+{
+
+   gpio_set_gpio_pin_CMockExpect(59, AT45DBX_CHIP_RESET);
+
+   at45dbx_init_CMockIgnoreAndReturn(60, 
+
+  1
+
+  );
+
+   UnityAssertEqualNumber((UNITY_INT)((1)), (UNITY_INT)((flash_init(1))), (
+
+  ((void *)0)
+
+  ), (UNITY_UINT)(61), UNITY_DISPLAY_STYLE_INT);
 
 }

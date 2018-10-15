@@ -4,4 +4,5 @@
 - mock_printf-stdarg.h
 - mock_at45dbx.h
 - mock_gpio.h
+- mock_spi.h
 - build/temp/_test_flashFirmata.c
