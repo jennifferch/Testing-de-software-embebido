@@ -86,6 +86,18 @@ int flash_write(uint32_t  addr, const uint8_t* buf, uint32_t len)
 }
 
 
+int flash_read(uint32_t addr, uint8_t* buf, uint32_t len)
+{
+        uint32_t sector = addr / AT45DBX_SECTOR_SIZE;
+        uint32_t i;
+       
+        at45dbx_read_open(sector);
+        for (i = 0; i < len; i++)
+                buf[i] = at45dbx_read_byte();
+        at45dbx_read_close();
+   return 0;
+}
+
 
 
 

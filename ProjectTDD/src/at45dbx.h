@@ -17,4 +17,7 @@ bool at45dbx_init(int spiOptions,int pba_hz);
 bool at45dbx_write_open(uint32_t  sector);
 bool at45dbx_write_byte(uint8_t b);
 bool at45dbx_write_close(void);
+bool at45dbx_read_open(uint32_t sector);
+uint8_t at45dbx_read_byte(void);
+bool at45dbx_read_close(void);
 #endif /* #ifndef _AT45DBX_H_ */

@@ -53,6 +53,24 @@ void at45dbx_write_close_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool 
 void at45dbx_write_close_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
 typedef _Bool (* CMOCK_at45dbx_write_close_CALLBACK)(int cmock_num_calls);
 void at45dbx_write_close_StubWithCallback(CMOCK_at45dbx_write_close_CALLBACK Callback);
+#define at45dbx_read_open_IgnoreAndReturn(cmock_retval) at45dbx_read_open_CMockIgnoreAndReturn(__LINE__, cmock_retval)
+void at45dbx_read_open_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+#define at45dbx_read_open_ExpectAndReturn(sector, cmock_retval) at45dbx_read_open_CMockExpectAndReturn(__LINE__, sector, cmock_retval)
+void at45dbx_read_open_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t sector, _Bool cmock_to_return);
+typedef _Bool (* CMOCK_at45dbx_read_open_CALLBACK)(uint32_t sector, int cmock_num_calls);
+void at45dbx_read_open_StubWithCallback(CMOCK_at45dbx_read_open_CALLBACK Callback);
+#define at45dbx_read_byte_IgnoreAndReturn(cmock_retval) at45dbx_read_byte_CMockIgnoreAndReturn(__LINE__, cmock_retval)
+void at45dbx_read_byte_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
+#define at45dbx_read_byte_ExpectAndReturn(cmock_retval) at45dbx_read_byte_CMockExpectAndReturn(__LINE__, cmock_retval)
+void at45dbx_read_byte_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return);
+typedef uint8_t (* CMOCK_at45dbx_read_byte_CALLBACK)(int cmock_num_calls);
+void at45dbx_read_byte_StubWithCallback(CMOCK_at45dbx_read_byte_CALLBACK Callback);
+#define at45dbx_read_close_IgnoreAndReturn(cmock_retval) at45dbx_read_close_CMockIgnoreAndReturn(__LINE__, cmock_retval)
+void at45dbx_read_close_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+#define at45dbx_read_close_ExpectAndReturn(cmock_retval) at45dbx_read_close_CMockExpectAndReturn(__LINE__, cmock_retval)
+void at45dbx_read_close_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+typedef _Bool (* CMOCK_at45dbx_read_close_CALLBACK)(int cmock_num_calls);
+void at45dbx_read_close_StubWithCallback(CMOCK_at45dbx_read_close_CALLBACK Callback);
 
 #if defined(__GNUC__) && !defined(__ICC) && !defined(__TMS470__)
 #if __GNUC__ > 4 || (__GNUC__ == 4 && (__GNUC_MINOR__ > 6 || (__GNUC_MINOR__ == 6 && __GNUC_PATCHLEVEL__ > 0)))

@@ -50,6 +50,7 @@ extern void test_WhenRunDebug_ThenflashInitOK(void);
 extern void test_WhenRunDebug_ThenflashInitFail(void);
 extern void test_WhenFirmataIsNotDownload_ThenInit(void);
 extern void test_WhenFirmataIsNotDownload_ThenFlashWrite(void);
+extern void test_WhenFirmataIsDownload_ThenFlashRead(void);
 
 
 /*=======Mock Management=====*/
@@ -119,6 +120,7 @@ int main(void)
   RUN_TEST(test_WhenRunDebug_ThenflashInitFail, 59);
   RUN_TEST(test_WhenFirmataIsNotDownload_ThenInit, 66);
   RUN_TEST(test_WhenFirmataIsNotDownload_ThenFlashWrite, 72);
+  RUN_TEST(test_WhenFirmataIsDownload_ThenFlashRead, 85);
 
   CMock_Guts_MemFreeFinal();
   return suite_teardown(UnityEnd());

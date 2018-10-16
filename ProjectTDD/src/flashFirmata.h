@@ -9,4 +9,5 @@ void led_init(void);
 int flash_init(int spiOptions);
 int fw_download_init(void);
 int flash_write(uint32_t  addr, const uint8_t* buf, uint32_t len);
+int flash_read(uint32_t addr, uint8_t* buf, uint32_t len);
 #endif // _FLASHFIRMATA_H

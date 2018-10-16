@@ -210,3 +210,43 @@ void test_WhenFirmataIsNotDownload_ThenFlashWrite(void)
 
 
 }
+
+
+
+void test_WhenFirmataIsDownload_ThenFlashRead(void)
+
+{
+
+   uint32_t sector = 36;
+
+   uint32_t len = 4;
+
+   uint8_t buf = 36;
+
+   uint8_t bt = 7;
+
+
+
+   at45dbx_read_open_CMockIgnoreAndReturn(92, 
+
+  1
+
+  );
+
+   at45dbx_read_byte_CMockIgnoreAndReturn(93, bt);
+
+   at45dbx_read_close_CMockIgnoreAndReturn(94, 
+
+  1
+
+  );
+
+   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_read(sector, &buf, len))), (
+
+  ((void *)0)
+
+  ), (UNITY_UINT)(95), UNITY_DISPLAY_STYLE_INT);
+
+
+
+}

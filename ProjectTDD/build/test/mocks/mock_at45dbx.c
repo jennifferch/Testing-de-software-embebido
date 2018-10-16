@@ -8,6 +8,9 @@
 
 static const char* CMockString_at45dbx_init = "at45dbx_init";
 static const char* CMockString_at45dbx_mem_check = "at45dbx_mem_check";
+static const char* CMockString_at45dbx_read_byte = "at45dbx_read_byte";
+static const char* CMockString_at45dbx_read_close = "at45dbx_read_close";
+static const char* CMockString_at45dbx_read_open = "at45dbx_read_open";
 static const char* CMockString_at45dbx_write_byte = "at45dbx_write_byte";
 static const char* CMockString_at45dbx_write_close = "at45dbx_write_close";
 static const char* CMockString_at45dbx_write_open = "at45dbx_write_open";
@@ -60,6 +63,31 @@ typedef struct _CMOCK_at45dbx_write_close_CALL_INSTANCE
 
 } CMOCK_at45dbx_write_close_CALL_INSTANCE;
 
+typedef struct _CMOCK_at45dbx_read_open_CALL_INSTANCE
+{
+  UNITY_LINE_TYPE LineNumber;
+  _Bool ReturnVal;
+  int CallOrder;
+  uint32_t Expected_sector;
+
+} CMOCK_at45dbx_read_open_CALL_INSTANCE;
+
+typedef struct _CMOCK_at45dbx_read_byte_CALL_INSTANCE
+{
+  UNITY_LINE_TYPE LineNumber;
+  uint8_t ReturnVal;
+  int CallOrder;
+
+} CMOCK_at45dbx_read_byte_CALL_INSTANCE;
+
+typedef struct _CMOCK_at45dbx_read_close_CALL_INSTANCE
+{
+  UNITY_LINE_TYPE LineNumber;
+  _Bool ReturnVal;
+  int CallOrder;
+
+} CMOCK_at45dbx_read_close_CALL_INSTANCE;
+
 static struct mock_at45dbxInstance
 {
   int at45dbx_mem_check_IgnoreBool;
@@ -87,6 +115,21 @@ static struct mock_at45dbxInstance
   CMOCK_at45dbx_write_close_CALLBACK at45dbx_write_close_CallbackFunctionPointer;
   int at45dbx_write_close_CallbackCalls;
   CMOCK_MEM_INDEX_TYPE at45dbx_write_close_CallInstance;
+  int at45dbx_read_open_IgnoreBool;
+  _Bool at45dbx_read_open_FinalReturn;
+  CMOCK_at45dbx_read_open_CALLBACK at45dbx_read_open_CallbackFunctionPointer;
+  int at45dbx_read_open_CallbackCalls;
+  CMOCK_MEM_INDEX_TYPE at45dbx_read_open_CallInstance;
+  int at45dbx_read_byte_IgnoreBool;
+  uint8_t at45dbx_read_byte_FinalReturn;
+  CMOCK_at45dbx_read_byte_CALLBACK at45dbx_read_byte_CallbackFunctionPointer;
+  int at45dbx_read_byte_CallbackCalls;
+  CMOCK_MEM_INDEX_TYPE at45dbx_read_byte_CallInstance;
+  int at45dbx_read_close_IgnoreBool;
+  _Bool at45dbx_read_close_FinalReturn;
+  CMOCK_at45dbx_read_close_CALLBACK at45dbx_read_close_CallbackFunctionPointer;
+  int at45dbx_read_close_CallbackCalls;
+  CMOCK_MEM_INDEX_TYPE at45dbx_read_close_CallInstance;
 } Mock;
 
 extern jmp_buf AbortFrame;
@@ -126,6 +169,24 @@ void mock_at45dbx_Verify(void)
   UNITY_TEST_ASSERT(CMOCK_GUTS_NONE == Mock.at45dbx_write_close_CallInstance, cmock_line, CMockStringCalledLess);
   if (Mock.at45dbx_write_close_CallbackFunctionPointer != NULL)
     Mock.at45dbx_write_close_CallInstance = CMOCK_GUTS_NONE;
+  if (Mock.at45dbx_read_open_IgnoreBool)
+    Mock.at45dbx_read_open_CallInstance = CMOCK_GUTS_NONE;
+  UNITY_SET_DETAIL(CMockString_at45dbx_read_open);
+  UNITY_TEST_ASSERT(CMOCK_GUTS_NONE == Mock.at45dbx_read_open_CallInstance, cmock_line, CMockStringCalledLess);
+  if (Mock.at45dbx_read_open_CallbackFunctionPointer != NULL)
+    Mock.at45dbx_read_open_CallInstance = CMOCK_GUTS_NONE;
+  if (Mock.at45dbx_read_byte_IgnoreBool)
+    Mock.at45dbx_read_byte_CallInstance = CMOCK_GUTS_NONE;
+  UNITY_SET_DETAIL(CMockString_at45dbx_read_byte);
+  UNITY_TEST_ASSERT(CMOCK_GUTS_NONE == Mock.at45dbx_read_byte_CallInstance, cmock_line, CMockStringCalledLess);
+  if (Mock.at45dbx_read_byte_CallbackFunctionPointer != NULL)
+    Mock.at45dbx_read_byte_CallInstance = CMOCK_GUTS_NONE;
+  if (Mock.at45dbx_read_close_IgnoreBool)
+    Mock.at45dbx_read_close_CallInstance = CMOCK_GUTS_NONE;
+  UNITY_SET_DETAIL(CMockString_at45dbx_read_close);
+  UNITY_TEST_ASSERT(CMOCK_GUTS_NONE == Mock.at45dbx_read_close_CallInstance, cmock_line, CMockStringCalledLess);
+  if (Mock.at45dbx_read_close_CallbackFunctionPointer != NULL)
+    Mock.at45dbx_read_close_CallInstance = CMOCK_GUTS_NONE;
 }
 
 void mock_at45dbx_Init(void)
@@ -147,6 +208,12 @@ void mock_at45dbx_Destroy(void)
   Mock.at45dbx_write_byte_CallbackCalls = 0;
   Mock.at45dbx_write_close_CallbackFunctionPointer = NULL;
   Mock.at45dbx_write_close_CallbackCalls = 0;
+  Mock.at45dbx_read_open_CallbackFunctionPointer = NULL;
+  Mock.at45dbx_read_open_CallbackCalls = 0;
+  Mock.at45dbx_read_byte_CallbackFunctionPointer = NULL;
+  Mock.at45dbx_read_byte_CallbackCalls = 0;
+  Mock.at45dbx_read_close_CallbackFunctionPointer = NULL;
+  Mock.at45dbx_read_close_CallbackCalls = 0;
   GlobalExpectCount = 0;
   GlobalVerifyOrder = 0;
 }
@@ -494,5 +561,201 @@ void at45dbx_write_close_StubWithCallback(CMOCK_at45dbx_write_close_CALLBACK Cal
 {
   Mock.at45dbx_write_close_IgnoreBool = (int)0;
   Mock.at45dbx_write_close_CallbackFunctionPointer = Callback;
+}
+
+_Bool at45dbx_read_open(uint32_t sector)
+{
+  UNITY_LINE_TYPE cmock_line = TEST_LINE_NUM;
+  CMOCK_at45dbx_read_open_CALL_INSTANCE* cmock_call_instance;
+  UNITY_SET_DETAIL(CMockString_at45dbx_read_open);
+  cmock_call_instance = (CMOCK_at45dbx_read_open_CALL_INSTANCE*)CMock_Guts_GetAddressFor(Mock.at45dbx_read_open_CallInstance);
+  Mock.at45dbx_read_open_CallInstance = CMock_Guts_MemNext(Mock.at45dbx_read_open_CallInstance);
+  if (Mock.at45dbx_read_open_IgnoreBool)
+  {
+    UNITY_CLR_DETAILS();
+    if (cmock_call_instance == NULL)
+      return Mock.at45dbx_read_open_FinalReturn;
+    memcpy(&Mock.at45dbx_read_open_FinalReturn, &cmock_call_instance->ReturnVal, sizeof(_Bool));
+    return cmock_call_instance->ReturnVal;
+  }
+  if (Mock.at45dbx_read_open_CallbackFunctionPointer != NULL)
+  {
+    return Mock.at45dbx_read_open_CallbackFunctionPointer(sector, Mock.at45dbx_read_open_CallbackCalls++);
+  }
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringCalledMore);
+  cmock_line = cmock_call_instance->LineNumber;
+  if (cmock_call_instance->CallOrder > ++GlobalVerifyOrder)
+    UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
+  if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
+    UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
+  {
+    UNITY_SET_DETAILS(CMockString_at45dbx_read_open,CMockString_sector);
+    UNITY_TEST_ASSERT_EQUAL_HEX32(cmock_call_instance->Expected_sector, sector, cmock_line, CMockStringMismatch);
+  }
+  UNITY_CLR_DETAILS();
+  return cmock_call_instance->ReturnVal;
+}
+
+void CMockExpectParameters_at45dbx_read_open(CMOCK_at45dbx_read_open_CALL_INSTANCE* cmock_call_instance, uint32_t sector)
+{
+  cmock_call_instance->Expected_sector = sector;
+}
+
+void at45dbx_read_open_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_at45dbx_read_open_CALL_INSTANCE));
+  CMOCK_at45dbx_read_open_CALL_INSTANCE* cmock_call_instance = (CMOCK_at45dbx_read_open_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.at45dbx_read_open_CallInstance = CMock_Guts_MemChain(Mock.at45dbx_read_open_CallInstance, cmock_guts_index);
+  Mock.at45dbx_read_open_IgnoreBool = (int)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  Mock.at45dbx_read_open_IgnoreBool = (int)1;
+}
+
+void at45dbx_read_open_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t sector, _Bool cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_at45dbx_read_open_CALL_INSTANCE));
+  CMOCK_at45dbx_read_open_CALL_INSTANCE* cmock_call_instance = (CMOCK_at45dbx_read_open_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.at45dbx_read_open_CallInstance = CMock_Guts_MemChain(Mock.at45dbx_read_open_CallInstance, cmock_guts_index);
+  Mock.at45dbx_read_open_IgnoreBool = (int)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  CMockExpectParameters_at45dbx_read_open(cmock_call_instance, sector);
+  memcpy(&cmock_call_instance->ReturnVal, &cmock_to_return, sizeof(_Bool));
+  UNITY_CLR_DETAILS();
+}
+
+void at45dbx_read_open_StubWithCallback(CMOCK_at45dbx_read_open_CALLBACK Callback)
+{
+  Mock.at45dbx_read_open_IgnoreBool = (int)0;
+  Mock.at45dbx_read_open_CallbackFunctionPointer = Callback;
+}
+
+uint8_t at45dbx_read_byte(void)
+{
+  UNITY_LINE_TYPE cmock_line = TEST_LINE_NUM;
+  CMOCK_at45dbx_read_byte_CALL_INSTANCE* cmock_call_instance;
+  UNITY_SET_DETAIL(CMockString_at45dbx_read_byte);
+  cmock_call_instance = (CMOCK_at45dbx_read_byte_CALL_INSTANCE*)CMock_Guts_GetAddressFor(Mock.at45dbx_read_byte_CallInstance);
+  Mock.at45dbx_read_byte_CallInstance = CMock_Guts_MemNext(Mock.at45dbx_read_byte_CallInstance);
+  if (Mock.at45dbx_read_byte_IgnoreBool)
+  {
+    UNITY_CLR_DETAILS();
+    if (cmock_call_instance == NULL)
+      return Mock.at45dbx_read_byte_FinalReturn;
+    Mock.at45dbx_read_byte_FinalReturn = cmock_call_instance->ReturnVal;
+    return cmock_call_instance->ReturnVal;
+  }
+  if (Mock.at45dbx_read_byte_CallbackFunctionPointer != NULL)
+  {
+    return Mock.at45dbx_read_byte_CallbackFunctionPointer(Mock.at45dbx_read_byte_CallbackCalls++);
+  }
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringCalledMore);
+  cmock_line = cmock_call_instance->LineNumber;
+  if (cmock_call_instance->CallOrder > ++GlobalVerifyOrder)
+    UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
+  if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
+    UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
+  UNITY_CLR_DETAILS();
+  return cmock_call_instance->ReturnVal;
+}
+
+void at45dbx_read_byte_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_at45dbx_read_byte_CALL_INSTANCE));
+  CMOCK_at45dbx_read_byte_CALL_INSTANCE* cmock_call_instance = (CMOCK_at45dbx_read_byte_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.at45dbx_read_byte_CallInstance = CMock_Guts_MemChain(Mock.at45dbx_read_byte_CallInstance, cmock_guts_index);
+  Mock.at45dbx_read_byte_IgnoreBool = (int)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  Mock.at45dbx_read_byte_IgnoreBool = (int)1;
+}
+
+void at45dbx_read_byte_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_at45dbx_read_byte_CALL_INSTANCE));
+  CMOCK_at45dbx_read_byte_CALL_INSTANCE* cmock_call_instance = (CMOCK_at45dbx_read_byte_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.at45dbx_read_byte_CallInstance = CMock_Guts_MemChain(Mock.at45dbx_read_byte_CallInstance, cmock_guts_index);
+  Mock.at45dbx_read_byte_IgnoreBool = (int)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  UNITY_CLR_DETAILS();
+}
+
+void at45dbx_read_byte_StubWithCallback(CMOCK_at45dbx_read_byte_CALLBACK Callback)
+{
+  Mock.at45dbx_read_byte_IgnoreBool = (int)0;
+  Mock.at45dbx_read_byte_CallbackFunctionPointer = Callback;
+}
+
+_Bool at45dbx_read_close(void)
+{
+  UNITY_LINE_TYPE cmock_line = TEST_LINE_NUM;
+  CMOCK_at45dbx_read_close_CALL_INSTANCE* cmock_call_instance;
+  UNITY_SET_DETAIL(CMockString_at45dbx_read_close);
+  cmock_call_instance = (CMOCK_at45dbx_read_close_CALL_INSTANCE*)CMock_Guts_GetAddressFor(Mock.at45dbx_read_close_CallInstance);
+  Mock.at45dbx_read_close_CallInstance = CMock_Guts_MemNext(Mock.at45dbx_read_close_CallInstance);
+  if (Mock.at45dbx_read_close_IgnoreBool)
+  {
+    UNITY_CLR_DETAILS();
+    if (cmock_call_instance == NULL)
+      return Mock.at45dbx_read_close_FinalReturn;
+    memcpy(&Mock.at45dbx_read_close_FinalReturn, &cmock_call_instance->ReturnVal, sizeof(_Bool));
+    return cmock_call_instance->ReturnVal;
+  }
+  if (Mock.at45dbx_read_close_CallbackFunctionPointer != NULL)
+  {
+    return Mock.at45dbx_read_close_CallbackFunctionPointer(Mock.at45dbx_read_close_CallbackCalls++);
+  }
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringCalledMore);
+  cmock_line = cmock_call_instance->LineNumber;
+  if (cmock_call_instance->CallOrder > ++GlobalVerifyOrder)
+    UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
+  if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
+    UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
+  UNITY_CLR_DETAILS();
+  return cmock_call_instance->ReturnVal;
+}
+
+void at45dbx_read_close_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_at45dbx_read_close_CALL_INSTANCE));
+  CMOCK_at45dbx_read_close_CALL_INSTANCE* cmock_call_instance = (CMOCK_at45dbx_read_close_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.at45dbx_read_close_CallInstance = CMock_Guts_MemChain(Mock.at45dbx_read_close_CallInstance, cmock_guts_index);
+  Mock.at45dbx_read_close_IgnoreBool = (int)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->ReturnVal = cmock_to_return;
+  Mock.at45dbx_read_close_IgnoreBool = (int)1;
+}
+
+void at45dbx_read_close_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return)
+{
+  CMOCK_MEM_INDEX_TYPE cmock_guts_index = CMock_Guts_MemNew(sizeof(CMOCK_at45dbx_read_close_CALL_INSTANCE));
+  CMOCK_at45dbx_read_close_CALL_INSTANCE* cmock_call_instance = (CMOCK_at45dbx_read_close_CALL_INSTANCE*)CMock_Guts_GetAddressFor(cmock_guts_index);
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringOutOfMemory);
+  memset(cmock_call_instance, 0, sizeof(*cmock_call_instance));
+  Mock.at45dbx_read_close_CallInstance = CMock_Guts_MemChain(Mock.at45dbx_read_close_CallInstance, cmock_guts_index);
+  Mock.at45dbx_read_close_IgnoreBool = (int)0;
+  cmock_call_instance->LineNumber = cmock_line;
+  cmock_call_instance->CallOrder = ++GlobalExpectCount;
+  memcpy(&cmock_call_instance->ReturnVal, &cmock_to_return, sizeof(_Bool));
+  UNITY_CLR_DETAILS();
+}
+
+void at45dbx_read_close_StubWithCallback(CMOCK_at45dbx_read_close_CALLBACK Callback)
+{
+  Mock.at45dbx_read_close_IgnoreBool = (int)0;
+  Mock.at45dbx_read_close_CallbackFunctionPointer = Callback;
 }
 

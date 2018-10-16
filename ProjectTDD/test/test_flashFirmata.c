@@ -81,3 +81,17 @@ void test_WhenFirmataIsNotDownload_ThenFlashWrite(void)
    TEST_ASSERT_EQUAL(0, flash_write(sector, &buf, len));
   
 }
+
+void test_WhenFirmataIsDownload_ThenFlashRead(void)
+{
+   uint32_t sector = 36;
+   uint32_t len = 4;
+   uint8_t buf = 36;
+   uint8_t bt = 7;
+
+   at45dbx_read_open_IgnoreAndReturn(true);
+   at45dbx_read_byte_IgnoreAndReturn(bt);
+   at45dbx_read_close_IgnoreAndReturn(true);
+   TEST_ASSERT_EQUAL(0, flash_read(sector, &buf, len));
+  
+}
