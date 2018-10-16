@@ -7,22 +7,22 @@
   :line: 26
   :message: ''
 - :test: test_WhenInitSystem_ThenMemoryFail
-  :line: 39
+  :line: 41
   :message: ''
 - :test: test_WhenRunDebug_ThenflashInitOK
-  :line: 52
+  :line: 57
   :message: ''
 - :test: test_WhenRunDebug_ThenflashInitFail
-  :line: 59
+  :line: 67
   :message: ''
 - :test: test_WhenFirmataIsNotDownload_ThenInit
-  :line: 66
+  :line: 76
   :message: ''
 - :test: test_WhenFirmataIsNotDownload_ThenFlashWrite
-  :line: 72
+  :line: 82
   :message: ''
 - :test: test_WhenFirmataIsDownload_ThenFlashRead
-  :line: 85
+  :line: 98
   :message: ''
 :failures: []
 :ignores: []
@@ -32,4 +32,4 @@
   :failed: 0
   :ignored: 0
 :stdout: []
-:time: 0.0034752540013869293
+:time: 0.003578319003281649

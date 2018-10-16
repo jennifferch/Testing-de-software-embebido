@@ -4,6 +4,8 @@
 
 #define SECTOR_SIZE AT45DBX_SECTOR_SIZE
 
+#define MAX_SIZE					4
+
 int mem_check(void);
 void led_init(void);
 int flash_init(int spiOptions);

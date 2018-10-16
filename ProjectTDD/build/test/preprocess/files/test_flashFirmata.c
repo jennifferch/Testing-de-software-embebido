@@ -47,9 +47,13 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
 {
 
-    gpio_clr_gpio_pin_CMockExpect(28, LEDG);
+    char msg[20] = "Memory check OK";
 
-    at45dbx_mem_check_CMockIgnoreAndReturn(29, 
+
+
+    gpio_clr_gpio_pin_CMockExpect(30, LEDG);
+
+    at45dbx_mem_check_CMockExpectAndReturn(31, 
 
    1
 
@@ -57,11 +61,11 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
 
 
-    printk_CMockIgnoreAndReturn(31, 0);
+    gpio_set_gpio_pin_CMockExpect(33, LEDG);
 
-    gpio_set_gpio_pin_CMockExpect(32, LEDG);
+    gpio_clr_gpio_pin_CMockExpect(34, LEDB);
 
-    gpio_clr_gpio_pin_CMockExpect(33, LEDB);
+    printk_CMockExpectAndReturn(35, msg, 0);
 
 
 
@@ -69,7 +73,7 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
    ((void *)0)
 
-   ), (UNITY_UINT)(35), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(37), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -81,9 +85,15 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
 {
 
-    gpio_clr_gpio_pin_CMockExpect(41, LEDG);
 
-    at45dbx_mem_check_CMockIgnoreAndReturn(42, 
+
+    char msg[20] = "Memory check fail";
+
+
+
+    gpio_clr_gpio_pin_CMockExpect(46, LEDG);
+
+    at45dbx_mem_check_CMockExpectAndReturn(47, 
 
    0
 
@@ -91,11 +101,11 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
 
 
-    printk_CMockIgnoreAndReturn(44, 0);
+    gpio_clr_gpio_pin_CMockExpect(49, LEDR);
 
-    gpio_clr_gpio_pin_CMockExpect(45, LEDR);
+    gpio_set_gpio_pin_CMockExpect(50, LEDG);
 
-    gpio_set_gpio_pin_CMockExpect(46, LEDG);
+    printk_CMockExpectAndReturn(51, msg, 0);
 
 
 
@@ -103,7 +113,7 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
    ((void *)0)
 
-   ), (UNITY_UINT)(48), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(53), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -115,19 +125,25 @@ void test_WhenRunDebug_ThenflashInitOK(void)
 
 {
 
-   gpio_set_gpio_pin_CMockExpect(54, AT45DBX_CHIP_RESET);
+   int spiOption = 0;
 
-   at45dbx_init_CMockIgnoreAndReturn(55, 
+
+
+   gpio_set_gpio_pin_CMockExpect(61, AT45DBX_CHIP_RESET);
+
+   at45dbx_init_CMockExpectAndReturn(62, spiOption, 0, 
 
   1
 
   );
 
-   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_init(0))), (
+
+
+   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_init(spiOption))), (
 
   ((void *)0)
 
-  ), (UNITY_UINT)(56), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(64), UNITY_DISPLAY_STYLE_INT);
 
 }
 
@@ -137,19 +153,19 @@ void test_WhenRunDebug_ThenflashInitFail(void)
 
 {
 
-   gpio_set_gpio_pin_CMockExpect(61, AT45DBX_CHIP_RESET);
+   int spiOption = 1;
 
-   at45dbx_init_CMockIgnoreAndReturn(62, 
 
-  1
 
-  );
+   gpio_set_gpio_pin_CMockExpect(71, AT45DBX_CHIP_RESET);
 
-   UnityAssertEqualNumber((UNITY_INT)((1)), (UNITY_INT)((flash_init(1))), (
+
+
+   UnityAssertEqualNumber((UNITY_INT)((1)), (UNITY_INT)((flash_init(spiOption))), (
 
   ((void *)0)
 
-  ), (UNITY_UINT)(63), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(73), UNITY_DISPLAY_STYLE_INT);
 
 }
 
@@ -159,13 +175,13 @@ void test_WhenFirmataIsNotDownload_ThenInit(void)
 
 {
 
-   nvram_init_CMockIgnoreAndReturn(68, 0);
+   nvram_init_CMockExpectAndReturn(78, 0);
 
    UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((fw_download_init())), (
 
   ((void *)0)
 
-  ), (UNITY_UINT)(69), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(79), UNITY_DISPLAY_STYLE_INT);
 
 }
 
@@ -175,37 +191,43 @@ void test_WhenFirmataIsNotDownload_ThenFlashWrite(void)
 
 {
 
-   uint32_t sector = 36;
+   uint32_t sector = 36 / (1 << 8);
 
-   uint32_t len = 4;
+   uint8_t buf[4] = {2, 4, 6, 8};
 
-   uint8_t buf = 36;
+   uint32_t i;
 
 
 
-   at45dbx_write_open_CMockIgnoreAndReturn(78, 
-
-  1
-
-  );
-
-   at45dbx_write_byte_CMockIgnoreAndReturn(79, 
+   at45dbx_write_open_CMockExpectAndReturn(88, sector, 
 
   1
 
   );
 
-   at45dbx_write_close_CMockIgnoreAndReturn(80, 
+   for (i = 0; i < 4; i++)
+
+      at45dbx_write_byte_CMockExpectAndReturn(90, buf[i], 
+
+     1
+
+     );
+
+
+
+   at45dbx_write_close_CMockExpectAndReturn(92, 
 
   1
 
   );
 
-   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_write(sector, &buf, len))), (
+
+
+   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_write(sector, buf, 4))), (
 
   ((void *)0)
 
-  ), (UNITY_UINT)(81), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(94), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -217,35 +239,39 @@ void test_WhenFirmataIsDownload_ThenFlashRead(void)
 
 {
 
-   uint32_t sector = 36;
+   uint32_t sector = 36 / (1 << 8);
 
-   uint32_t len = 4;
-
-   uint8_t buf = 36;
-
-   uint8_t bt = 7;
+   uint8_t buf[4] = {12, 14, 16, 18};
 
 
 
-   at45dbx_read_open_CMockIgnoreAndReturn(92, 
+   uint32_t i;
 
-  1
 
-  );
 
-   at45dbx_read_byte_CMockIgnoreAndReturn(93, bt);
-
-   at45dbx_read_close_CMockIgnoreAndReturn(94, 
+   at45dbx_read_open_CMockExpectAndReturn(105, sector, 
 
   1
 
   );
 
-   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_read(sector, &buf, len))), (
+   for (i = 0; i < 4; i++)
+
+      at45dbx_read_byte_CMockExpectAndReturn(107, buf[i]);
+
+
+
+   at45dbx_read_close_CMockExpectAndReturn(109, 
+
+  1
+
+  );
+
+   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_read(sector, buf, 4))), (
 
   ((void *)0)
 
-  ), (UNITY_UINT)(95), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(110), UNITY_DISPLAY_STYLE_INT);
 
 
 

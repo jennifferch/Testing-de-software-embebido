@@ -115,12 +115,12 @@ int main(void)
   suite_setup();
   UnityBegin("test_flashFirmata.c");
   RUN_TEST(test_WhenInitSystem_ThenMemoryOK, 26);
-  RUN_TEST(test_WhenInitSystem_ThenMemoryFail, 39);
-  RUN_TEST(test_WhenRunDebug_ThenflashInitOK, 52);
-  RUN_TEST(test_WhenRunDebug_ThenflashInitFail, 59);
-  RUN_TEST(test_WhenFirmataIsNotDownload_ThenInit, 66);
-  RUN_TEST(test_WhenFirmataIsNotDownload_ThenFlashWrite, 72);
-  RUN_TEST(test_WhenFirmataIsDownload_ThenFlashRead, 85);
+  RUN_TEST(test_WhenInitSystem_ThenMemoryFail, 41);
+  RUN_TEST(test_WhenRunDebug_ThenflashInitOK, 57);
+  RUN_TEST(test_WhenRunDebug_ThenflashInitFail, 67);
+  RUN_TEST(test_WhenFirmataIsNotDownload_ThenInit, 76);
+  RUN_TEST(test_WhenFirmataIsNotDownload_ThenFlashWrite, 82);
+  RUN_TEST(test_WhenFirmataIsDownload_ThenFlashRead, 98);
 
   CMock_Guts_MemFreeFinal();
   return suite_teardown(UnityEnd());
