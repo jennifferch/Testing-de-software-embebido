@@ -9,21 +9,25 @@
 
 
 
+
+
+
+
 void setUp(void)
 
 {
 
-   gpio_enable_gpio_pin_CMockExpect(11, LEDG);
+   gpio_enable_gpio_pin_CMockExpect(13, LEDG);
 
-   gpio_enable_gpio_pin_CMockExpect(12, LEDR);
+   gpio_enable_gpio_pin_CMockExpect(14, LEDR);
 
-   gpio_enable_gpio_pin_CMockExpect(13, LEDB);
+   gpio_enable_gpio_pin_CMockExpect(15, LEDB);
 
-   gpio_set_gpio_pin_CMockExpect(14, LEDG);
+   gpio_set_gpio_pin_CMockExpect(16, LEDG);
 
-   gpio_set_gpio_pin_CMockExpect(15, LEDR);
+   gpio_set_gpio_pin_CMockExpect(17, LEDR);
 
-   gpio_set_gpio_pin_CMockExpect(16, LEDB);
+   gpio_set_gpio_pin_CMockExpect(18, LEDB);
 
    led_init();
 
@@ -43,9 +47,9 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
 {
 
-    gpio_clr_gpio_pin_CMockExpect(26, LEDG);
+    gpio_clr_gpio_pin_CMockExpect(28, LEDG);
 
-    at45dbx_mem_check_CMockIgnoreAndReturn(27, 
+    at45dbx_mem_check_CMockIgnoreAndReturn(29, 
 
    1
 
@@ -53,11 +57,11 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
 
 
-    printk_CMockIgnoreAndReturn(29, 0);
+    printk_CMockIgnoreAndReturn(31, 0);
 
-    gpio_set_gpio_pin_CMockExpect(30, LEDG);
+    gpio_set_gpio_pin_CMockExpect(32, LEDG);
 
-    gpio_clr_gpio_pin_CMockExpect(31, LEDB);
+    gpio_clr_gpio_pin_CMockExpect(33, LEDB);
 
 
 
@@ -65,7 +69,7 @@ void test_WhenInitSystem_ThenMemoryOK(void)
 
    ((void *)0)
 
-   ), (UNITY_UINT)(33), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(35), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -77,9 +81,9 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
 {
 
-    gpio_clr_gpio_pin_CMockExpect(39, LEDG);
+    gpio_clr_gpio_pin_CMockExpect(41, LEDG);
 
-    at45dbx_mem_check_CMockIgnoreAndReturn(40, 
+    at45dbx_mem_check_CMockIgnoreAndReturn(42, 
 
    0
 
@@ -87,11 +91,11 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
 
 
-    printk_CMockIgnoreAndReturn(42, 0);
+    printk_CMockIgnoreAndReturn(44, 0);
 
-    gpio_clr_gpio_pin_CMockExpect(43, LEDR);
+    gpio_clr_gpio_pin_CMockExpect(45, LEDR);
 
-    gpio_set_gpio_pin_CMockExpect(44, LEDG);
+    gpio_set_gpio_pin_CMockExpect(46, LEDG);
 
 
 
@@ -99,7 +103,7 @@ void test_WhenInitSystem_ThenMemoryFail(void)
 
    ((void *)0)
 
-   ), (UNITY_UINT)(46), UNITY_DISPLAY_STYLE_INT);
+   ), (UNITY_UINT)(48), UNITY_DISPLAY_STYLE_INT);
 
 
 
@@ -111,9 +115,9 @@ void test_WhenRunDebug_ThenflashInitOK(void)
 
 {
 
-   gpio_set_gpio_pin_CMockExpect(52, AT45DBX_CHIP_RESET);
+   gpio_set_gpio_pin_CMockExpect(54, AT45DBX_CHIP_RESET);
 
-   at45dbx_init_CMockIgnoreAndReturn(53, 
+   at45dbx_init_CMockIgnoreAndReturn(55, 
 
   1
 
@@ -123,7 +127,7 @@ void test_WhenRunDebug_ThenflashInitOK(void)
 
   ((void *)0)
 
-  ), (UNITY_UINT)(54), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(56), UNITY_DISPLAY_STYLE_INT);
 
 }
 
@@ -133,9 +137,9 @@ void test_WhenRunDebug_ThenflashInitFail(void)
 
 {
 
-   gpio_set_gpio_pin_CMockExpect(59, AT45DBX_CHIP_RESET);
+   gpio_set_gpio_pin_CMockExpect(61, AT45DBX_CHIP_RESET);
 
-   at45dbx_init_CMockIgnoreAndReturn(60, 
+   at45dbx_init_CMockIgnoreAndReturn(62, 
 
   1
 
@@ -145,7 +149,7 @@ void test_WhenRunDebug_ThenflashInitFail(void)
 
   ((void *)0)
 
-  ), (UNITY_UINT)(61), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(63), UNITY_DISPLAY_STYLE_INT);
 
 }
 
@@ -155,12 +159,54 @@ void test_WhenFirmataIsNotDownload_ThenInit(void)
 
 {
 
-   nvram_init_CMockIgnoreAndReturn(66, 0);
+   nvram_init_CMockIgnoreAndReturn(68, 0);
 
    UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((fw_download_init())), (
 
   ((void *)0)
 
-  ), (UNITY_UINT)(67), UNITY_DISPLAY_STYLE_INT);
+  ), (UNITY_UINT)(69), UNITY_DISPLAY_STYLE_INT);
+
+}
+
+
+
+void test_WhenFirmataIsNotDownload_ThenFlashWrite(void)
+
+{
+
+   uint32_t sector = 36;
+
+   uint32_t len = 4;
+
+   uint8_t buf = 36;
+
+
+
+   at45dbx_write_open_CMockIgnoreAndReturn(78, 
+
+  1
+
+  );
+
+   at45dbx_write_byte_CMockIgnoreAndReturn(79, 
+
+  1
+
+  );
+
+   at45dbx_write_close_CMockIgnoreAndReturn(80, 
+
+  1
+
+  );
+
+   UnityAssertEqualNumber((UNITY_INT)((0)), (UNITY_INT)((flash_write(sector, &buf, len))), (
+
+  ((void *)0)
+
+  ), (UNITY_UINT)(81), UNITY_DISPLAY_STYLE_INT);
+
+
 
 }

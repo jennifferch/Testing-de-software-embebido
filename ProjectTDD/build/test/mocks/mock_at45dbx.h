@@ -35,6 +35,24 @@ void at45dbx_init_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_t
 void at45dbx_init_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, int spiOptions, int pba_hz, _Bool cmock_to_return);
 typedef _Bool (* CMOCK_at45dbx_init_CALLBACK)(int spiOptions, int pba_hz, int cmock_num_calls);
 void at45dbx_init_StubWithCallback(CMOCK_at45dbx_init_CALLBACK Callback);
+#define at45dbx_write_open_IgnoreAndReturn(cmock_retval) at45dbx_write_open_CMockIgnoreAndReturn(__LINE__, cmock_retval)
+void at45dbx_write_open_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+#define at45dbx_write_open_ExpectAndReturn(sector, cmock_retval) at45dbx_write_open_CMockExpectAndReturn(__LINE__, sector, cmock_retval)
+void at45dbx_write_open_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint32_t sector, _Bool cmock_to_return);
+typedef _Bool (* CMOCK_at45dbx_write_open_CALLBACK)(uint32_t sector, int cmock_num_calls);
+void at45dbx_write_open_StubWithCallback(CMOCK_at45dbx_write_open_CALLBACK Callback);
+#define at45dbx_write_byte_IgnoreAndReturn(cmock_retval) at45dbx_write_byte_CMockIgnoreAndReturn(__LINE__, cmock_retval)
+void at45dbx_write_byte_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+#define at45dbx_write_byte_ExpectAndReturn(b, cmock_retval) at45dbx_write_byte_CMockExpectAndReturn(__LINE__, b, cmock_retval)
+void at45dbx_write_byte_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, uint8_t b, _Bool cmock_to_return);
+typedef _Bool (* CMOCK_at45dbx_write_byte_CALLBACK)(uint8_t b, int cmock_num_calls);
+void at45dbx_write_byte_StubWithCallback(CMOCK_at45dbx_write_byte_CALLBACK Callback);
+#define at45dbx_write_close_IgnoreAndReturn(cmock_retval) at45dbx_write_close_CMockIgnoreAndReturn(__LINE__, cmock_retval)
+void at45dbx_write_close_CMockIgnoreAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+#define at45dbx_write_close_ExpectAndReturn(cmock_retval) at45dbx_write_close_CMockExpectAndReturn(__LINE__, cmock_retval)
+void at45dbx_write_close_CMockExpectAndReturn(UNITY_LINE_TYPE cmock_line, _Bool cmock_to_return);
+typedef _Bool (* CMOCK_at45dbx_write_close_CALLBACK)(int cmock_num_calls);
+void at45dbx_write_close_StubWithCallback(CMOCK_at45dbx_write_close_CALLBACK Callback);
 
 #if defined(__GNUC__) && !defined(__ICC) && !defined(__TMS470__)
 #if __GNUC__ > 4 || (__GNUC__ == 4 && (__GNUC_MINOR__ > 6 || (__GNUC_MINOR__ == 6 && __GNUC_PATCHLEVEL__ > 0)))

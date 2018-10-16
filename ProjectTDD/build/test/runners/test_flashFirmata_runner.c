@@ -49,6 +49,7 @@ extern void test_WhenInitSystem_ThenMemoryFail(void);
 extern void test_WhenRunDebug_ThenflashInitOK(void);
 extern void test_WhenRunDebug_ThenflashInitFail(void);
 extern void test_WhenFirmataIsNotDownload_ThenInit(void);
+extern void test_WhenFirmataIsNotDownload_ThenFlashWrite(void);
 
 
 /*=======Mock Management=====*/
@@ -112,11 +113,12 @@ int main(void)
 {
   suite_setup();
   UnityBegin("test_flashFirmata.c");
-  RUN_TEST(test_WhenInitSystem_ThenMemoryOK, 24);
-  RUN_TEST(test_WhenInitSystem_ThenMemoryFail, 37);
-  RUN_TEST(test_WhenRunDebug_ThenflashInitOK, 50);
-  RUN_TEST(test_WhenRunDebug_ThenflashInitFail, 57);
-  RUN_TEST(test_WhenFirmataIsNotDownload_ThenInit, 64);
+  RUN_TEST(test_WhenInitSystem_ThenMemoryOK, 26);
+  RUN_TEST(test_WhenInitSystem_ThenMemoryFail, 39);
+  RUN_TEST(test_WhenRunDebug_ThenflashInitOK, 52);
+  RUN_TEST(test_WhenRunDebug_ThenflashInitFail, 59);
+  RUN_TEST(test_WhenFirmataIsNotDownload_ThenInit, 66);
+  RUN_TEST(test_WhenFirmataIsNotDownload_ThenFlashWrite, 72);
 
   CMock_Guts_MemFreeFinal();
   return suite_teardown(UnityEnd());
